@@ -1,12 +1,22 @@
 import express from 'express';
 import cors from 'cors';
 import https from 'https';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static frontend files built by Vite into dist folder
+app.use(express.static(path.join(__dirname, 'dist')));
+
 
 /**
  * Helper to fetch HTTPS content following redirects
@@ -266,7 +276,14 @@ app.get('/api/download', (req, res) => {
   });
 });
 
+// SPA fallback: return dist/index.html for non-API routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Snapchat Live Proxy Server running on http://localhost:${PORT}`);
 });
+
 
