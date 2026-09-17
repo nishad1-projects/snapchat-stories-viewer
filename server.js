@@ -299,6 +299,16 @@ app.get('/dmca-compliance', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'dmca-compliance.html'));
 });
 
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'dist', 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'dist', 'sitemap.xml'));
+});
+
 // SPA fallback: return dist/index.html for non-API routes
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next();
