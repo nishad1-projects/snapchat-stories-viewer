@@ -284,6 +284,21 @@ app.get('/api/ping', (req, res) => {
   res.status(200).json({ status: 'ok', time: new Date().toISOString() });
 });
 
+/**
+ * Standalone Legal & Compliance Page Routes
+ */
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'privacy-policy.html'));
+});
+
+app.get('/terms-of-service', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'terms-of-service.html'));
+});
+
+app.get('/dmca-compliance', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'dmca-compliance.html'));
+});
+
 // SPA fallback: return dist/index.html for non-API routes
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next();

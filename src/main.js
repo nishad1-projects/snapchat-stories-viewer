@@ -558,28 +558,4 @@ document.addEventListener('DOMContentLoaded', () => {
     trustContent.innerHTML = `<h2>${title}</h2><p>${text}</p>`;
     trustModal.classList.remove('hidden');
   };
-
-  const footPrivacyBtn = document.getElementById('footPrivacyBtn');
-  if (footPrivacyBtn) {
-    footPrivacyBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openTrustModal('Privacy Policy', 'At ViewSnapchatStory.com, your privacy is our top priority. We do not collect, store, or log any personal user data, IP addresses, or Snapchat search queries. All story previews are processed via isolated proxy channels without account registration.');
-    });
-  }
-
-  const footTermsBtn = document.getElementById('footTermsBtn');
-  if (footTermsBtn) {
-    footTermsBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openTrustModal('Terms of Service', 'ViewSnapchatStory.com is an independent fan utility designed for viewing publicly accessible Snapchat stories. Users are responsible for complying with local copyright laws. By using this site, you agree to access only public content.');
-    });
-  }
-
-  const footDmcaBtn = document.getElementById('footDmcaBtn');
-  if (footDmcaBtn) {
-    footDmcaBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      openTrustModal('DMCA & Compliance', 'ViewSnapchatStory.com respects intellectual property rights. All media displayed is served directly from Snapchat public CDN servers. If you are a content owner and wish to request removal of your public profile, contact dmca@viewsnapchatstory.com.');
-    });
-  }
 });
