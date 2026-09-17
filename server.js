@@ -276,6 +276,14 @@ app.get('/api/download', (req, res) => {
   });
 });
 
+/**
+ * API Route: GET /api/ping
+ * Health check endpoint for external uptime monitors (e.g. UptimeRobot, Cron-job.org)
+ */
+app.get('/api/ping', (req, res) => {
+  res.status(200).json({ status: 'ok', time: new Date().toISOString() });
+});
+
 // SPA fallback: return dist/index.html for non-API routes
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next();
@@ -284,6 +292,16 @@ app.get('*', (req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Snapchat Live Proxy Server running on http://localhost:${PORT}`);
+  
+  // Keep-alive heartbeat: self-ping every 10 minutes when deployed on Render to keep instance warm
+  const SITE_URL = process.env.RENDER_EXTERNAL_URL || 'https://viewsnapchatstory.com';
+  setInterval(() => {
+    https.get(`${SITE_URL}/api/ping`, (pingRes) => {
+      console.log(`[Heartbeat] Keep-alive ping sent to ${SITE_URL}/api/ping - Status: ${pingRes.statusCode}`);
+    }).on('error', (err) => {
+      console.error('[Heartbeat Error]', err.message);
+    });
+  }, 10 * 60 * 1000);
 });
 
 
